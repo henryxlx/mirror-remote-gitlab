@@ -112,7 +112,7 @@ lbl_gitea_login_name = Label(root, text='Gitea登录用户名：')
 lbl_gitea_login_name.grid(row=i, sticky=W)
 str_var_gitea_login_name = StringVar()
 entry_gitea_login_name = Entry(root, textvariable=str_var_gitea_login_name)
-str_var_gitea_login_name.set(mirror_handler.get_login_name())
+str_var_gitea_login_name.set(mirror_handler.gitea_login_name)
 entry_gitea_login_name.grid(row=i, column=1, sticky=W)
 
 i = i + 1
@@ -121,7 +121,7 @@ lbl_gitea_login_password = Label(root, text='Gitea登录密码：')
 lbl_gitea_login_password.grid(row=i, sticky=W)
 str_var_gitea_login_password = StringVar()
 entry_gitea_login_password = Entry(root, textvariable=str_var_gitea_login_password)
-str_var_gitea_login_password.set(mirror_handler.get_login_password())
+str_var_gitea_login_password.set(mirror_handler.gitea_login_password)
 entry_gitea_login_password.grid(row=i, column=1, sticky=W)
 
 i = i + 1

@@ -25,15 +25,11 @@ class GiteaProjectMirrorHandler:
         self.gitlab_api_project_fetcher = None
         self.gitea_host_url = gitea_host_url
         self.__gitea_api_base_url = gitea_host_url + '/api/v1'
+        self.gitea_login_name = login_name
+        self.gitea_login_password = login_password
         self.__basicAuth = (login_name, login_password)
         self.local_mirror_root_path = DEFAULT_LOCAL_MIRROR_ROOT_PATH
         self.label_message = None
-
-    def get_login_name(self):
-        return self.__basicAuth[0]
-
-    def get_login_password(self):
-        return self.__basicAuth[1]
 
     def __log_work_info(self, message):
         if self.label_message:
