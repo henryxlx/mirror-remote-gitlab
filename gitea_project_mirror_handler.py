@@ -43,6 +43,10 @@ class GiteaProjectMirrorHandler:
             self.__gitlab_projects = self.__gitlab_projects = self.gitlab_api_project_fetcher.get_all_projects()
         return self.__gitlab_projects
 
+    def reset_gitea_server(self):
+        self.__gitea_server_active = None
+        return self
+
     def check_gitea_server_active(self):
         if self.__gitea_server_active is None:
             self.__log_work_info('Detect Gitea server is connected. It takes long time...')
