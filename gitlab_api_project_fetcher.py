@@ -21,19 +21,19 @@ class GitlabApiProjectFetcher:
     # 调试方式控制输出更多信息
     debug_mode = False
 
-    __gitea_server_active = None
+    __gitlib_server_active = None
 
-    def __get_gitea_server_active(self):
-        if self.__gitea_server_active is None:
+    def __get_gitlab_server_active(self):
+        if self.__gitlib_server_active is None:
             self.__log_work_info('Check Gitlab server is connected. It takes long time...')
             try:
                 requests.get(self.apiUrl, headers=headers, timeout=3)
-                self.__gitea_server_active = True
+                self.__gitlib_server_active = True
             except requests.exceptions.ConnectionError:
                 self.__log_work_info('Can not connection Gitlab server. using local cache file.')
-                self.__gitea_server_active = False
+                self.__gitlib_server_active = False
 
-        return self.__gitea_server_active
+        return self.__gitlib_server_active
 
     def __init__(self, host=DEFAULT_GITLIB_HOST_URL, api_private_token=DEFAULT_GITLIB_API_PRIVATE_TOKEN):
         self.gitlab_host_url = host
@@ -57,7 +57,7 @@ class GitlabApiProjectFetcher:
             projects.append(project)
 
     def get_all_projects(self):
-        if self.__get_gitea_server_active():
+        if self.__get_gitlab_server_active():
             return self.get_all_projects_by_gitlab_api()
         else:
             return self.get_projects_from_api_json_file()
