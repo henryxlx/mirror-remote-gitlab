@@ -31,15 +31,21 @@ def on_create_local_mirror_path():
 
 def on_delete_gitea_user_and_project():
     btn_delete_gitea_user_and_project.config(state=DISABLED)
-    mirror_handler.delete_project_and_user_by_api()
-    messagebox.showinfo("Info", "清除Gitea中的仓库与用户信息成功！")
+    if mirror_handler.check_gitea_server_active():
+        mirror_handler.delete_project_and_user_by_api()
+        messagebox.showinfo("Info", "清除Gitea中的仓库与用户信息成功！")
+    else:
+        messagebox.showerror("Error", '操作失败！无法访问Gitea服务器.')
     btn_delete_gitea_user_and_project.config(state=NORMAL)
 
 
 def on_create_gitea_user_project_by_gitlab():
     btn_mirror.config(state=DISABLED)
-    mirror_handler.create_user_with_project_by_api()
-    messagebox.showinfo("Info", "Gitea镜像Gitlab仓库与用户信息成功！")
+    if mirror_handler.check_gitea_server_active():
+        mirror_handler.create_user_with_project_by_api()
+        messagebox.showinfo("Info", "Gitea镜像Gitlab仓库与用户信息成功！")
+    else:
+        messagebox.showerror("Error", '操作失败！无法访问Gitea服务器.')
     btn_mirror.config(state=NORMAL)
 
 
