@@ -24,6 +24,7 @@ def choose_local_mirror_dir():
 
 def on_create_local_mirror_path():
     btn_create_local_mirror_path.config(state=DISABLED)
+    verify_gitlab_gitea_config()
     mirror_handler.create_mirror_path(str_var_gitlab_local_mirror_dir.get())
     messagebox.showinfo("Info", "本地Git镜像目录结构建立成功！")
     btn_create_local_mirror_path.config(state=NORMAL)
@@ -31,6 +32,7 @@ def on_create_local_mirror_path():
 
 def on_delete_gitea_user_and_project():
     btn_delete_gitea_user_and_project.config(state=DISABLED)
+    verify_gitlab_gitea_config()
     if mirror_handler.check_gitea_server_active():
         mirror_handler.delete_project_and_user_by_api()
         messagebox.showinfo("Info", "清除Gitea中的仓库与用户信息成功！")
@@ -41,12 +43,31 @@ def on_delete_gitea_user_and_project():
 
 def on_create_gitea_user_project_by_gitlab():
     btn_mirror.config(state=DISABLED)
+    verify_gitlab_gitea_config()
     if mirror_handler.check_gitea_server_active():
         mirror_handler.create_user_with_project_by_api()
         messagebox.showinfo("Info", "Gitea镜像Gitlab仓库与用户信息成功！")
     else:
         messagebox.showerror("Error", '操作失败！无法访问Gitea服务器.')
     btn_mirror.config(state=NORMAL)
+
+
+def verify_gitlab_gitea_config():
+    if str_var_gitlab_host_url.get() != fetcher.gitlab_host_url:
+        fetcher.reset_gitlab_server().gitlab_host_url = str_var_gitlab_host_url.get()
+
+    gitlab_api_private_token = str_var_gitlab_api_private_token.get()
+    if len(gitlab_api_private_token) > 0 and gitlab_api_private_token != fetcher.api_private_token:
+        fetcher.reset_gitlab_server().api_private_token = gitlab_api_private_token
+
+    if str_var_gitea_host_url.get() != mirror_handler.gitea_host_url:
+        mirror_handler.reset_gitea_server().gitea_host_url = str_var_gitea_host_url.get()
+
+    if str_var_gitea_login_name.get() != mirror_handler.gitea_login_name:
+        mirror_handler.reset_gitea_server().gitea_login_name = str_var_gitea_login_name.get()
+
+    if str_var_gitea_login_password.get() != mirror_handler.gitea_login_password:
+        mirror_handler.reset_gitea_server().gitea_login_password = str_var_gitea_login_password.get()
 
 
 fetcher = GitlabApiProjectFetcher()
