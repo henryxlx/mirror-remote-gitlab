@@ -27,7 +27,7 @@ class GitlabApiProjectFetcher:
         if self.__gitea_server_active is None:
             self.__log_work_info('Check Gitlab server is connected. It takes long time...')
             try:
-                requests.get(self.apiUrl, headers=headers)
+                requests.get(self.apiUrl, headers=headers, timeout=3)
                 self.__gitea_server_active = True
             except requests.exceptions.ConnectionError:
                 self.__log_work_info('Can not connection Gitlab server. using local cache file.')
