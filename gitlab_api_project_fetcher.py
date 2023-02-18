@@ -56,6 +56,10 @@ class GitlabApiProjectFetcher:
                        'path_with_namespace': entry['path_with_namespace']}
             projects.append(project)
 
+    def reset_gitlab_server(self):
+        self.__gitlib_server_active = None
+        return self
+
     def get_all_projects(self):
         if self.__get_gitlab_server_active():
             return self.get_all_projects_by_gitlab_api()
