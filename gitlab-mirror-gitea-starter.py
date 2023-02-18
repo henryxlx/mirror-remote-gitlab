@@ -80,9 +80,9 @@ i = i + 1
 # 第一行，Gitlab服务器地址标签及输入框
 lbl_gitlab_host_url = Label(root, text='Gitlab服务器地址：')
 lbl_gitlab_host_url.grid(row=i, sticky=W)
-str_var_git_host_url = StringVar()
-entry_gitlab_host_url = Entry(root, width=46, textvariable=str_var_git_host_url)
-str_var_git_host_url.set(fetcher.gitlab_host_url)
+str_var_gitlab_host_url = StringVar()
+entry_gitlab_host_url = Entry(root, width=46, textvariable=str_var_gitlab_host_url)
+str_var_gitlab_host_url.set(fetcher.gitlab_host_url)
 entry_gitlab_host_url.grid(row=i, column=1, sticky=E)
 
 i = i + 1
