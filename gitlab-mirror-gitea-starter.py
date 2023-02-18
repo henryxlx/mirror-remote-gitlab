@@ -87,11 +87,11 @@ entry_gitlab_host_url.grid(row=i, column=1, sticky=E)
 
 i = i + 1
 # 第二行，Gitlab API访问令牌标签及输入框
-lbl_gitlab_api_token = Label(root, text='Gitlab API访问令牌：')
-lbl_gitlab_api_token.grid(row=i, sticky=W)
-e = StringVar()
-entry_gitlab_api_token = Entry(root, width=46, textvariable=e)
-entry_gitlab_api_token.grid(row=i, column=1, sticky=E)
+lbl_gitlab_api_private_token = Label(root, text='Gitlab API访问令牌：')
+lbl_gitlab_api_private_token.grid(row=i, sticky=W)
+str_var_gitlab_api_private_token = StringVar()
+entry_gitlab_api_private_token = Entry(root, width=46, textvariable=str_var_gitlab_api_private_token)
+entry_gitlab_api_private_token.grid(row=i, column=1, sticky=E)
 
 i = i + 1
 # 空行
