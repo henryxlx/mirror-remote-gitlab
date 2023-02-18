@@ -45,6 +45,15 @@ class GiteaProjectMirrorHandler:
             self.__gitlab_projects = self.__gitlab_projects = self.gitlab_api_project_fetcher.get_all_projects()
         return self.__gitlab_projects
 
+    def check_gitea_server_active(self):
+        self.__log_work_info('Detect Gitea server connected. It takes long time...')
+        try:
+            requests.get(self.gitea_host_url, headers=headers, timeout=3)
+            return True
+        except requests.exceptions.ConnectionError:
+            self.__log_work_info('Can not connection Gitlab server. using local cache file.')
+            return False
+
     def has_user_exist(self, username):
         get_user_api_url = self.__gitea_api_base_url + '/users/' + username
         api_resp = requests.get(get_user_api_url, headers=headers, auth=self.__basicAuth)
@@ -122,7 +131,7 @@ class GiteaProjectMirrorHandler:
 
             repo_name = arr_repo_path[1]
             if self.has_repo_exist(self.__gitea_api_base_url + '/repos/' + username + '/' + repo_name):
-                self.__log_work_info('Waring: Gitea respository is exists: ' + repo_name)
+                self.__log_work_info('Waring: Gitea repository is exists: ' + repo_name)
                 continue
 
             post_create_repo_api_url = self.__gitea_api_base_url + '/admin/users/' + username + '/repos'
