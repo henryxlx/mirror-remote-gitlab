@@ -77,27 +77,6 @@ mirror_handler.gitlab_api_project_fetcher = fetcher
 root = Tk()
 i = 0
 
-# 第一行，Git本地镜像根目录/文件夹标签及输入框
-lbl_gitlab_local_mirror_dir = Label(root, text='Git本地镜像根目录/文件夹：')
-lbl_gitlab_local_mirror_dir.grid(row=i, sticky=W)
-str_var_gitlab_local_mirror_dir = StringVar()
-entry_gitlab_local_mirror_dir = Entry(root, width=46, textvariable=str_var_gitlab_local_mirror_dir)
-str_var_gitlab_local_mirror_dir.set(mirror_handler.local_mirror_root_path)
-entry_gitlab_local_mirror_dir.grid(row=i, column=1, sticky=E)
-btn_choose_dir = Button(root, text='...', command=choose_local_mirror_dir)
-btn_choose_dir.grid(row=i, column=2, sticky=E)
-
-i = i + 1
-# 按扭，command绑定事件
-btn_create_local_mirror_path = Button(root, text='获取Gitlab项目信息创建Git本地镜像目录结构', command=on_create_local_mirror_path)
-btn_create_local_mirror_path.grid(row=i, sticky=E)
-
-i = i + 1
-# 空行
-lbl_blank = Label(root, text='')
-lbl_blank.grid(row=i, sticky=W)
-
-i = i + 1
 # 第一行，Gitlab服务器地址标签及输入框
 lbl_gitlab_host_url = Label(root, text='Gitlab服务器地址：')
 lbl_gitlab_host_url.grid(row=i, sticky=W)
@@ -120,18 +99,34 @@ lbl_blank = Label(root, text='')
 lbl_blank.grid(row=i, sticky=W)
 
 i = i + 1
-# 第四行，Gitea镜像服务器地址标签及输入框
+# 第四行，Git本地镜像根目录/文件夹标签及输入框
+lbl_gitlab_local_mirror_dir = Label(root, text='Git本地镜像根目录/文件夹：')
+lbl_gitlab_local_mirror_dir.grid(row=i, sticky=W)
+str_var_gitlab_local_mirror_dir = StringVar()
+entry_gitlab_local_mirror_dir = Entry(root, width=46, textvariable=str_var_gitlab_local_mirror_dir)
+str_var_gitlab_local_mirror_dir.set(mirror_handler.local_mirror_root_path)
+entry_gitlab_local_mirror_dir.grid(row=i, column=1, sticky=E)
+btn_choose_dir = Button(root, text='...', command=choose_local_mirror_dir)
+btn_choose_dir.grid(row=i, column=2, sticky=E)
+
+i = i + 1
+# 按扭，command绑定事件
+btn_create_local_mirror_path = Button(root, text='获取Gitlab项目信息创建Git本地镜像目录结构', command=on_create_local_mirror_path)
+btn_create_local_mirror_path.grid(row=i, column=1, sticky=W)
+
+i = i + 1
+# 空行
+lbl_blank = Label(root, text='')
+lbl_blank.grid(row=i, sticky=W)
+
+i = i + 1
+# 第五行，Gitea镜像服务器地址标签及输入框
 lbl_gitea_host_url = Label(root, text='Gitea镜像服务器地址：')
 lbl_gitea_host_url.grid(row=i, sticky=W)
 str_var_gitea_host_url = StringVar()
 entry_gitea_host_url = Entry(root, width=46, textvariable=str_var_gitea_host_url)
 str_var_gitea_host_url.set(mirror_handler.gitea_host_url)
 entry_gitea_host_url.grid(row=i, column=1, sticky=E)
-
-i = i + 1
-# 删除Gitea中用户与仓库信息按扭，command绑定事件
-btn_delete_gitea_user_and_project = Button(root, text='>>>清除Gitea中的仓库与用户信息', command=on_delete_gitea_user_and_project)
-btn_delete_gitea_user_and_project.grid(row=i, sticky=E)
 
 i = i + 1
 # 第六行，Gitea登录用户名标签及输入框
@@ -152,9 +147,9 @@ str_var_gitea_login_password.set(mirror_handler.gitea_login_password)
 entry_gitea_login_password.grid(row=i, column=1, sticky=W)
 
 i = i + 1
-# 空行
-lbl_blank = Label(root, text='')
-lbl_blank.grid(row=i, sticky=W)
+# 删除Gitea中用户与仓库信息按扭，command绑定事件
+btn_delete_gitea_user_and_project = Button(root, text='清除Gitea仓库与用户信息，慎用！', command=on_delete_gitea_user_and_project)
+btn_delete_gitea_user_and_project.grid(row=i, sticky=E)
 
 i = i + 1
 # Gitlab与Gitea用户与仓库信息同步按扭，command绑定事件
