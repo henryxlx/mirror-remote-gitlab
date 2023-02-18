@@ -7,24 +7,24 @@ from gitea_project_mirror_handler import GiteaProjectMirrorHandler
 
 class LabelMessageUpdater:
 
-    def __init__(self, tk_root, label_text_var):
+    def __init__(self, tk_root, label_str_var):
         self.__tkRoot = tk_root
-        self.__labelTextVar = label_text_var
+        self.__labelStringVar = label_str_var
 
     def set_label_text(self, text):
-        self.__labelTextVar.set(text)
+        self.__labelStringVar.set(text)
         self.__tkRoot.update()
 
 
 def choose_local_mirror_dir():
     selected_folder = filedialog.askdirectory()
     if selected_folder != '':
-        gitlab_local_mirror_dir.set(selected_folder)
+        str_var_gitlab_local_mirror_dir.set(selected_folder)
 
 
 def on_create_local_mirror_path():
     btn_create_local_mirror_path.config(state=DISABLED)
-    mirror_handler.create_mirror_path(gitlab_local_mirror_dir.get())
+    mirror_handler.create_mirror_path(str_var_gitlab_local_mirror_dir.get())
     messagebox.showinfo("Info", "本地Git镜像目录结构建立成功！")
     btn_create_local_mirror_path.config(state=NORMAL)
 
@@ -53,9 +53,9 @@ i = 0
 # 第一行，Git本地镜像根目录/文件夹标签及输入框
 lbl_gitlab_local_mirror_dir = Label(root, text='Git本地镜像根目录/文件夹：')
 lbl_gitlab_local_mirror_dir.grid(row=i, sticky=W)
-gitlab_local_mirror_dir = StringVar()
-entry_gitlab_local_mirror_dir = Entry(root, width=46, textvariable=gitlab_local_mirror_dir)
-gitlab_local_mirror_dir.set(mirror_handler.local_mirror_root_path)
+str_var_gitlab_local_mirror_dir = StringVar()
+entry_gitlab_local_mirror_dir = Entry(root, width=46, textvariable=str_var_gitlab_local_mirror_dir)
+str_var_gitlab_local_mirror_dir.set(mirror_handler.local_mirror_root_path)
 entry_gitlab_local_mirror_dir.grid(row=i, column=1, sticky=E)
 btn_choose_dir = Button(root, text='...', command=choose_local_mirror_dir)
 btn_choose_dir.grid(row=i, column=2, sticky=E)
@@ -136,10 +136,10 @@ btn_mirror.grid(row=i, column=1, sticky=E)
 
 i = i + 1
 # 操作过程中输出信息提示
-ls_process_msg = StringVar()
-lbl_process_msg = Label(root, textvariable=ls_process_msg)
+str_var_process_msg = StringVar()
+lbl_process_msg = Label(root, textvariable=str_var_process_msg)
 lbl_process_msg.grid(row=i, columnspan=2, sticky=W)
-labelMessageUpdater = LabelMessageUpdater(root, ls_process_msg)
+labelMessageUpdater = LabelMessageUpdater(root, str_var_process_msg)
 
 mirror_handler.label_message = labelMessageUpdater
 fetcher.label_message = labelMessageUpdater
