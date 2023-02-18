@@ -26,7 +26,7 @@ Git for windows 2.x
 PYthon 3.8 及以上版本
 ```
 
-### 工具使用环境安装
+### 环境安装与工具使用
 
 下面是使用Git和Python软件的安装过程
 
