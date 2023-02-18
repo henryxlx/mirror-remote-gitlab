@@ -89,7 +89,7 @@ btn_choose_dir.grid(row=i, column=2, sticky=E)
 
 i = i + 1
 # 按扭，command绑定事件
-btn_create_local_mirror_path = Button(root, text='根据项目信息创建Git本地镜像目录结构', command=on_create_local_mirror_path)
+btn_create_local_mirror_path = Button(root, text='获取Gitlab项目信息创建Git本地镜像目录结构', command=on_create_local_mirror_path)
 btn_create_local_mirror_path.grid(row=i, sticky=E)
 
 i = i + 1
