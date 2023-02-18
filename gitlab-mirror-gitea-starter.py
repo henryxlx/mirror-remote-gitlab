@@ -26,18 +26,19 @@ def on_create_local_mirror_path():
     btn_create_local_mirror_path.config(state=DISABLED)
     verify_gitlab_gitea_config()
     mirror_handler.create_mirror_path(str_var_gitlab_local_mirror_dir.get())
-    messagebox.showinfo("Info", "本地Git镜像目录结构建立成功！")
+    messagebox.showinfo("信息", "本地Git镜像目录结构建立成功！")
     btn_create_local_mirror_path.config(state=NORMAL)
 
 
 def on_delete_gitea_user_and_project():
     btn_delete_gitea_user_and_project.config(state=DISABLED)
-    verify_gitlab_gitea_config()
-    if mirror_handler.check_gitea_server_active():
-        mirror_handler.delete_project_and_user_by_api()
-        messagebox.showinfo("Info", "清除Gitea中的仓库与用户信息成功！")
-    else:
-        messagebox.showerror("Error", '操作失败！无法访问Gitea服务器.')
+    if messagebox.askyesno("提示", "你确定要删除Gitea服务器中的仓库和用户信息吗？"):
+        verify_gitlab_gitea_config()
+        if mirror_handler.check_gitea_server_active():
+            mirror_handler.delete_project_and_user_by_api()
+            messagebox.showinfo("信息", "清除Gitea中的仓库与用户信息成功！")
+        else:
+            messagebox.showerror("错误", '操作失败！无法访问Gitea服务器.')
     btn_delete_gitea_user_and_project.config(state=NORMAL)
 
 
@@ -46,9 +47,9 @@ def on_create_gitea_user_project_by_gitlab():
     verify_gitlab_gitea_config()
     if mirror_handler.check_gitea_server_active():
         mirror_handler.create_user_with_project_by_api()
-        messagebox.showinfo("Info", "Gitea镜像Gitlab仓库与用户信息成功！")
+        messagebox.showinfo("信息", "Gitea镜像Gitlab仓库与用户信息成功！")
     else:
-        messagebox.showerror("Error", '操作失败！无法访问Gitea服务器.')
+        messagebox.showerror("错误", '操作失败！无法访问Gitea服务器.')
     btn_mirror.config(state=NORMAL)
 
 
