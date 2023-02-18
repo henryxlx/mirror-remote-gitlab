@@ -18,6 +18,8 @@ DEFAULT_LOCAL_MIRROR_ROOT_PATH = 'test-local-mirror-dir'  # 当前程序所在�
 class GiteaProjectMirrorHandler:
     """ 使用Gitea API对Gitea中的仓库和用户进行镜像处理"""
 
+    __gitea_server_active = None
+
     def __init__(self, gitea_host_url=DEFAULT_GITEA_HOST_URL, login_name=DEFAULT_GITEA_LOGIN_NAME,
                  login_password=DEFAULT_GITEA_LOGIN_PWD):
 
@@ -42,13 +44,16 @@ class GiteaProjectMirrorHandler:
         return self.__gitlab_projects
 
     def check_gitea_server_active(self):
-        self.__log_work_info('Detect Gitea server connected. It takes long time...')
-        try:
-            requests.get(self.gitea_host_url, headers=headers, timeout=3)
-            return True
-        except requests.exceptions.ConnectionError:
-            self.__log_work_info('Can not connection Gitlab server. using local cache file.')
-            return False
+        if self.__gitea_server_active is None:
+            self.__log_work_info('Detect Gitea server is connected. It takes long time...')
+            try:
+                requests.get(self.gitea_host_url, headers=headers, timeout=3)
+                self.__gitea_server_active = True
+            except requests.exceptions.ConnectionError:
+                self.__log_work_info('Can not connection Gitea server. mirror can not be completed!')
+                self.__gitea_server_active = False
+
+        return self.__gitea_server_active
 
     def has_user_exist(self, username):
         get_user_api_url = self.__gitea_api_base_url + '/users/' + username
