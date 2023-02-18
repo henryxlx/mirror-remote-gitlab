@@ -39,8 +39,9 @@ class GiteaProjectMirrorHandler:
         print(message)
 
     def __get_gitlab_projects(self):
-        if not self.__gitlab_projects and self.gitlab_api_project_fetcher:
-            self.__gitlab_projects = self.__gitlab_projects = self.gitlab_api_project_fetcher.get_all_projects()
+        if self.gitlab_api_project_fetcher:
+            if not self.__gitlab_projects or self.gitlab_api_project_fetcher.get_gitlab_server_reset():
+                self.__gitlab_projects = self.__gitlab_projects = self.gitlab_api_project_fetcher.get_all_projects()
         return self.__gitlab_projects
 
     def reset_gitea_server(self):

@@ -56,6 +56,9 @@ class GitlabApiProjectFetcher:
                        'path_with_namespace': entry['path_with_namespace']}
             projects.append(project)
 
+    def get_gitlab_server_reset(self):
+        return self.__gitlib_server_active is None
+
     def reset_gitlab_server(self):
         self.__gitlib_server_active = None
         return self
